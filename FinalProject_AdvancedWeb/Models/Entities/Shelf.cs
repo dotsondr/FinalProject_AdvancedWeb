@@ -8,7 +8,7 @@ namespace FinalProject_AdvancedWeb.Models.Entities
         public string? ShelfName { get; set; }
         [StringLength(128)]
 
-        public int ProductID { get; set; }
-        public Product? Product { get; set; }
+        public ICollection<Product> Products { get; set; } = new List<Product>();
+
     }
 }

@@ -5,6 +5,8 @@ namespace FinalProject_AdvancedWeb.Models.ViewModels
 {
     public class CreateShelfVM
     {
+        public Shelf? Shelf { get; set; }
+
         [DisplayName("Shelf Name")]
         public string? ShelfName { get; set; }
 

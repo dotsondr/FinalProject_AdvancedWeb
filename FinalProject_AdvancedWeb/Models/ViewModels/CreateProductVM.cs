@@ -5,7 +5,6 @@ namespace FinalProject_AdvancedWeb.Models.ViewModels
 {
     public class CreateProductVM
     {
-        public Product? Product { get; set; }
         public string ProductName { get; set; }
         [DisplayName("Publication Year")]
         public int Quantity { get; set; }
