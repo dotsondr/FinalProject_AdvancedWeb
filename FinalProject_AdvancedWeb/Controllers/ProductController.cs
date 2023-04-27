@@ -17,12 +17,12 @@ namespace FinalProject_AdvancedWeb.Controllers
         }
         public async Task<IActionResult> CreateAsync([Bind(Prefix = "id")] int shelfId)
         {
-            var book = await _shelfRepo.ReadAsync(shelfId);
-            if (book == null)
+            var shelf = await _shelfRepo.ReadAsync(shelfId);
+            if (shelf == null)
             {
                 RedirectToAction("Index", "shelf");
             }
-            ViewData["shelf"] = Shelf;
+            ViewData["shelf"] = shelf;
             return View();
         }
         [HttpPost]
@@ -46,7 +46,7 @@ namespace FinalProject_AdvancedWeb.Controllers
             {
                 return RedirectToAction("Index", "Shelf");
             }
-            var product = Shelf.Products.FirstOrDefault(a => a.Id == productId);
+            var product = shelf.Products.FirstOrDefault(a => a.Id == productId);
             if (product == null)
             {
                 return RedirectToAction("Details", "Shelf");
