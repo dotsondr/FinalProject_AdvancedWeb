@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using DRDLab7RelatedData1.Models.Entities;
+using FinalProject_AdvancedWeb.Models.Entities;
 using System;
 
-namespace RelatedDataCreateRead.Services
+namespace FinalProject_AdvancedWeb.Services
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<Book> Book => Set<Book>();
+        public DbSet<Shelf> Shelf => Set<Shelf>();
 
-        public DbSet<Author> Author => Set<Author>();
+        public DbSet<Product> Product => Set<Product>();
 
         public ApplicationDbContext(DbContextOptions options) : base(options) { }
 

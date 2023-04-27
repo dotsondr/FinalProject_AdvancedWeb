@@ -1,20 +1,20 @@
-﻿using DRDLab7RelatedData1.Models.Entities;
+﻿using FinalProject_AdvancedWeb.Models.Entities;
 using System;
 
-namespace DRDLab7RelatedData1.Services
+namespace FinalProject_AdvancedWeb.Services
 {
     public interface IShelfRepository
     {
-        Task<ICollection<Book>> ReadAllAsync();
+        Task<ICollection<Shelf>> ReadAllAsync();
 
-        Task<Book?> ReadAsync(int id);
+        Task<Shelf?> ReadAsync(int id);
 
-        Task<Book> CreateAsync(Book book);
+        Task<Shelf> CreateAsync(Shelf shelf);
 
-        Task<Author> CreateAuthorAsync(int bookId, Author author);
+        Task<Product> CreateAuthorAsync(int bookId, Product product);
 
-        Task UpdateAuthorAsync(int bookId, Author author);
+        Task UpdateProductAsync(int bookId, Product product);
 
-        Task DeleteAuthorAsync(int bookId, int authorId);
+        Task DeleteProductAsync(int bookId, int authorId);
     }
 }

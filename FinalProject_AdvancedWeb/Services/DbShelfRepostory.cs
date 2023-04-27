@@ -1,9 +1,8 @@
-﻿using DRDLab7RelatedData1.Models.Entities;
-using Microsoft.AspNetCore.Mvc;
+﻿using FinalProject_AdvancedWeb.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using RelatedDataCreateRead.Services;
 
-namespace DRDLab7RelatedData1.Services
+namespace FinalProject_AdvancedWeb.Services
 {
     public class DbShelfRepostory : IShelfRepository
     {
@@ -14,7 +13,7 @@ namespace DRDLab7RelatedData1.Services
             _app = app;
         }
 
-        public async Task<ICollection<Book>> ReadAllAsync()
+        public async Task<ICollection<Shelf>> ReadAllAsync()
         {
             return await _app.Book
              .Include(a => a.Authors)
@@ -22,14 +21,14 @@ namespace DRDLab7RelatedData1.Services
             
         }
 
-        public async Task<Book> CreateAsync(Book book)
+        public async Task<Shelf> CreateAsync(Shelf shelf)
         {
-            await _app.Book.AddAsync(book);
+            await _app.Book.AddAsync(shelf);
             await _app.SaveChangesAsync();
-            return book;
+            return shelf;
         }
 
-        public async Task<Book?> ReadAsync(int id)
+        public async Task<Shelf?> ReadAsync(int id)
         {
             var book = await _app.Book.FindAsync(id);
             if (book != null)
@@ -41,22 +40,22 @@ namespace DRDLab7RelatedData1.Services
             return book;
         }
 
-        public async Task<Author> CreateAuthorAsync(int bookId, Author author)
+        public async Task<Product> CreateAuthorAsync(int shelfId, Product product)
         {
-            var book = await _app.Book.FindAsync(bookId);
-            if (book != null)
+            var shelf = await _app.Book.FindAsync(shelfId);
+            if (shelf != null)
             {
-                book.Authors.Add(author);
-                author.Book = book;
+                shelf.Authors.Add(product);
+                product.Shelf = shelf;
                 await _app.SaveChangesAsync();
             }
 
-            return author;
+            return product;
         }
 
-        public async Task UpdateAuthorAsync(int bookId, Author UpdatedAuthor)
+        public async Task UpdateAuthorAsync(int shelfId, Author UpdatedAuthor)
         {
-            var book = await ReadAsync(bookId);
+            var book = await ReadAsync(shelfId);
             if (book != null)
             {
                 var authorToUpdate = book.Authors.FirstOrDefault(a => a.Id == UpdatedAuthor.Id);
@@ -71,15 +70,15 @@ namespace DRDLab7RelatedData1.Services
 
         }
 
-        public async Task DeleteAuthorAsync(int bookId, int authorId)
+        public async Task DeleteAuthorAsync(int shelfId, int authorId)
         {
-            var book = await ReadAsync(bookId);
-            if (book != null)
+            var shelf = await ReadAsync(shelfId);
+            if (shelf != null)
             {
-                var authorToDelete = book.Authors.FirstOrDefault(a => a.Id == authorId);
+                var authorToDelete = shelf.Authors.FirstOrDefault(a => a.Id == authorId);
                 if (authorToDelete != null)
                 {
-                    book.Authors.Remove(authorToDelete);
+                    shelf.Authors.Remove(authorToDelete);
                     await _app.SaveChangesAsync();
                 }
             }
