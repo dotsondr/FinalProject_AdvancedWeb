@@ -1,6 +1,6 @@
 ﻿using FinalProject_AdvancedWeb.Models.Entities;
 using Microsoft.EntityFrameworkCore;
-using RelatedDataCreateRead.Services;
+using FinalProject_AdvancedWeb.Services;
 
 namespace FinalProject_AdvancedWeb.Services
 {
@@ -15,26 +15,26 @@ namespace FinalProject_AdvancedWeb.Services
 
         public async Task<ICollection<Shelf>> ReadAllAsync()
         {
-            return await _app.Book
-             .Include(a => a.Authors)
+            return await _app.Shelf
+             .Include(a => a.Products)
              .ToListAsync();
             
         }
 
         public async Task<Shelf> CreateAsync(Shelf shelf)
         {
-            await _app.Book.AddAsync(shelf);
+            await _app.Shelf.AddAsync(shelf);
             await _app.SaveChangesAsync();
             return shelf;
         }
 
         public async Task<Shelf?> ReadAsync(int id)
         {
-            var book = await _app.Book.FindAsync(id);
+            var book = await _app.Shelf.FindAsync(id);
             if (book != null)
             {
                 _app.Entry(book)
-                .Collection(a => a.Authors)
+                .Collection(a => a.Products)
                 .Load();
             }
             return book;
@@ -42,10 +42,10 @@ namespace FinalProject_AdvancedWeb.Services
 
         public async Task<Product> CreateAuthorAsync(int shelfId, Product product)
         {
-            var shelf = await _app.Book.FindAsync(shelfId);
+            var shelf = await _app.Shelf.FindAsync(shelfId);
             if (shelf != null)
             {
-                shelf.Authors.Add(product);
+                shelf.Products.Add(product);
                 product.Shelf = shelf;
                 await _app.SaveChangesAsync();
             }
@@ -53,16 +53,16 @@ namespace FinalProject_AdvancedWeb.Services
             return product;
         }
 
-        public async Task UpdateAuthorAsync(int shelfId, Author UpdatedAuthor)
+        public async Task UpdateProductAsync(int shelfId, Product updatedProduct)
         {
-            var book = await ReadAsync(shelfId);
-            if (book != null)
+            var shelf = await ReadAsync(shelfId);
+            if (shelf != null)
             {
-                var authorToUpdate = book.Authors.FirstOrDefault(a => a.Id == UpdatedAuthor.Id);
+                var authorToUpdate = shelf.Products.FirstOrDefault(a => a.Id == updatedProduct.Id);
                 if (authorToUpdate != null)
                 {
-                    authorToUpdate.FirstName = UpdatedAuthor.FirstName;
-                    authorToUpdate.LastName = UpdatedAuthor.LastName;
+                    authorToUpdate.FirstName = updatedProduct.FirstName;
+                    authorToUpdate.LastName = updatedProduct.LastName;
                     await _app.SaveChangesAsync();
                 }
             }
@@ -70,15 +70,15 @@ namespace FinalProject_AdvancedWeb.Services
 
         }
 
-        public async Task DeleteAuthorAsync(int shelfId, int authorId)
+        public async Task DeleteProductAsync(int shelfId, int productId)
         {
             var shelf = await ReadAsync(shelfId);
             if (shelf != null)
             {
-                var authorToDelete = shelf.Authors.FirstOrDefault(a => a.Id == authorId);
+                var authorToDelete = shelf.Products.FirstOrDefault(a => a.Id == productId);
                 if (authorToDelete != null)
                 {
-                    shelf.Authors.Remove(authorToDelete);
+                    shelf.Products.Remove(authorToDelete);
                     await _app.SaveChangesAsync();
                 }
             }

@@ -11,10 +11,10 @@ namespace FinalProject_AdvancedWeb.Services
 
         Task<Shelf> CreateAsync(Shelf shelf);
 
-        Task<Product> CreateAuthorAsync(int bookId, Product product);
+        Task<Product> CreateAuthorAsync(int shelfId, Product product);
 
-        Task UpdateProductAsync(int bookId, Product product);
+        Task UpdateProductAsync(int shelfId, Product updatedProduct);
 
-        Task DeleteProductAsync(int bookId, int authorId);
+        Task DeleteProductAsync(int shelfId, int productId);
     }
 }
