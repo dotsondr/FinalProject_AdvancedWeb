@@ -58,11 +58,11 @@ namespace FinalProject_AdvancedWeb.Services
             var shelf = await ReadAsync(shelfId);
             if (shelf != null)
             {
-                var authorToUpdate = shelf.Products.FirstOrDefault(a => a.Id == updatedProduct.Id);
-                if (authorToUpdate != null)
+                var productToUpdate = shelf.Products.FirstOrDefault(a => a.Id == updatedProduct.Id);
+                if (productToUpdate != null)
                 {
-                    authorToUpdate.FirstName = updatedProduct.FirstName;
-                    authorToUpdate.LastName = updatedProduct.LastName;
+                    productToUpdate.ProductName = updatedProduct.ProductName;
+                    productToUpdate.Quantity = updatedProduct.Quantity;
                     await _app.SaveChangesAsync();
                 }
             }

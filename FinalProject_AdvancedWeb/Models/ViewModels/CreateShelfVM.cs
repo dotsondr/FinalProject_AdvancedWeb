@@ -10,7 +10,7 @@ namespace FinalProject_AdvancedWeb.Models.ViewModels
         [DisplayName("Shelf Name")]
         public string? ShelfName { get; set; }
 
-        public Shelf GetAuthorInstance()
+        public Shelf GetShelfInstance()
         {
             return new Shelf
             {

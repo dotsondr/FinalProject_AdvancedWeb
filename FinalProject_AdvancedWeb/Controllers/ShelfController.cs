@@ -1,10 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FinalProject_AdvancedWeb.Models.Entities;
 using FinalProject_AdvancedWeb.Models.ViewModels;
+using FinalProject_AdvancedWeb.Services;
+
 namespace FinalProject_AdvancedWeb.Controllers
 {
     public class ShelfController : Controller
     {
+        private readonly IShelfRepository _shelfRepo;
+
+        public ShelfController(IShelfRepository shelfRepo)
+        {
+            _shelfRepo = shelfRepo;
+        }
         public async Task<IActionResult> IndexAsync()
         {
             var allShelves = await _shelfRepo.ReadAllAsync();
@@ -18,12 +26,7 @@ namespace FinalProject_AdvancedWeb.Controllers
             return View(model);
 
         }
-        private readonly IShelfRepository _shelfRepo;
 
-        public ShelfController(IShelfRepository bookRepo)
-        {
-            _shelfRepo = shelfRepo;
-        }
         public IActionResult Create()
         {
             return View();
@@ -35,7 +38,7 @@ namespace FinalProject_AdvancedWeb.Controllers
             {
                 var shelf = shelfVM.GetShelfInstance();
 
-                await _shelfRepo.CreateAsync(Shelf);
+                await _shelfRepo.CreateAsync(shelf);
 
                 return RedirectToAction("Index", "Shelf");
             }
