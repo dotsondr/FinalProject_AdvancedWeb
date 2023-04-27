@@ -13,7 +13,9 @@ namespace FinalProject_AdvancedWeb.Controllers
         {
             _shelfRepo = shelfRepo;
         }
-        public async Task<IActionResult> IndexAsync()
+
+        [ActionName("Index")]
+        public async Task<IActionResult> Index()
         {
             var allShelves = await _shelfRepo.ReadAllAsync();
             var model = allShelves.Select(b =>

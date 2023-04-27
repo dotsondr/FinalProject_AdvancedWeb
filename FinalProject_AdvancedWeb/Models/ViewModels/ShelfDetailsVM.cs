@@ -5,8 +5,10 @@ namespace FinalProject_AdvancedWeb.Models.ViewModels
     public class ShelfDetailsVM
     {
         public int Id { get; set; }
+
+        [DisplayName("Shelf Name")]
         public string ShelfName { get; set; }
-        [DisplayName("Publication Year")]
+        
         public ICollection<Product> Products { get; set; } = new List<Product>();
 
     }

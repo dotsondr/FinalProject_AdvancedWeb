@@ -15,7 +15,7 @@ namespace FinalProject_AdvancedWeb.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Shelf");
         }
 
         public IActionResult Privacy()

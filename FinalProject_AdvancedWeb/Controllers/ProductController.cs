@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using FinalProject_AdvancedWeb.Models.Entities;
 using FinalProject_AdvancedWeb.Models.ViewModels;
+using FinalProject_AdvancedWeb.Services;
+
 namespace FinalProject_AdvancedWeb.Controllers
 {
     public class ProductController : Controller
@@ -66,7 +68,7 @@ namespace FinalProject_AdvancedWeb.Controllers
             if (ModelState.IsValid)
             {
                 var product = productVM.GetProductInstance();
-                await _shelfRepo.UpdateAuthorAsync(shelfId, product);
+                await _shelfRepo.UpdateProductAsync(shelfId, product);
                 return RedirectToAction("Details", "shelf", new { id = shelfId });
             }
             productVM.shelf = await _shelfRepo.ReadAsync(shelfId);
@@ -79,7 +81,7 @@ namespace FinalProject_AdvancedWeb.Controllers
             {
                 return RedirectToAction("Index", "Shelf");
             }
-            var product = shelf.Authors.FirstOrDefault(a => a.Id == productId);
+            var product = shelf.Products.FirstOrDefault(a => a.Id == productId);
             if (product == null)
             {
                 return RedirectToAction("Details", "Shelf", new { id = shelfId });
@@ -97,7 +99,7 @@ namespace FinalProject_AdvancedWeb.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int shelfId, int productId)
         {
-            await _shelfRepo.DeleteAuthorAsync(shelfId, productId);
+            await _shelfRepo.DeleteProductAsync(shelfId, productId);
             return RedirectToAction("Details", "Shelf", new { id = shelfId });
         }
     }
